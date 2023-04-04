@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ThemContextProvider } from '../../../context/themContext/ThemContext';
 
 const Footer = () => {
+  const {dark} = useContext(ThemContextProvider)
     return (
-        <footer className="footer p-10 bg-base-300 text-base-content">
+        <footer className={`footer p-10 ${dark ? ' bg-gray-800 text-white':'bg-base-300 text-black'}  text-base-content`}>
         <div>
           <span className="footer-title">Services</span> 
           <Link className="link link-hover">Branding</Link> 
