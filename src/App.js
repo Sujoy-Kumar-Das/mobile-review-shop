@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routers/router/Router";
+import { useContext } from "react";
+import { ThemContextProvider } from "./context/themContext/ThemContext";
 
 function App() {
+  const { dark } = useContext(ThemContextProvider);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`${dark && 'bg-slate-950'}`}>
+      <div className="w-full lg:w-4/5 mx-auto">
+        <RouterProvider router={router}></RouterProvider>
+      </div>
     </div>
   );
 }
