@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import UseTitle from "../../../hooks/UseTitle";
-import ProductCard from "./ProductCard";
-import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { Link } from "react-router-dom";
+import { ThemContextProvider } from "../../context/themContext/ThemContext";
+import UseTitle from "../../hooks/UseTitle";
+import ProductCard from "../Home/products/ProductCard";
 
 const Products = () => {
   const {dark} = useContext(ThemContextProvider)
   UseTitle("products");
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/home/products")
+    fetch("http://localhost:5000/products")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data.data)
