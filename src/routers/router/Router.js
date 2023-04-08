@@ -4,6 +4,8 @@ import Home from "../../pages/Home/home/Home";
 import Error from "../../pages/404/Error";
 import AllProducts from "../../pages/allProduct/AllProducts";
 import Detail from "../../pages/detail/Detail";
+import Login from "../../pages/registration/login/Login";
+import Singup from "../../pages/registration/singup/Singup";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +18,8 @@ export const router = createBrowserRouter([
       {path:'/product/detail/:id',
       loader:({params})=>{return fetch(`http://localhost:5000/product/detail/${params.id}`)},
       element:<Detail></Detail>},
+      {path:'/login',element:<Login></Login>},
+      {path:'/singup',element:<Singup></Singup>},
       {path: "*", element: <Error></Error> },
     ],
   },
