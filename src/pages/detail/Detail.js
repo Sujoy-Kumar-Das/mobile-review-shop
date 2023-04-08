@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { ThemContextProvider } from "../../context/themContext/ThemContext";
-import { FaStar } from "react-icons/fa";
 import Error from "../404/Error";
 import Review from "./reviews/Review";
 import Comment from "./comment/Comment";
@@ -15,11 +14,11 @@ const Detail = () => {
   return (
     <div>
       {data.success ? (
-        <div className="my-5">
+        <div className={`my-5 ${
+          dark ? "bg-gray-900 text-white" : "bg-white"
+        }`}>
           <div
-            className={`card ${
-              dark ? "bg-gray-900 text-white" : "bg-white"
-            } shadow-xl  transition hover:border-pink-500/10 hover:shadow-pink-500/10`}
+            className={`card  shadow-xl  transition hover:border-pink-500/10 hover:shadow-pink-500/10`}
           >
             <figure className="px-10 pt-10">
               <img src={img} alt={`${name} pic`} className="rounded-xl" />
@@ -36,7 +35,7 @@ const Detail = () => {
               </p>
             </div>
           </div>
-          <div className="mt-5 ">
+          <div className=" mt-20">
             <h2 className="text-4xl text-center">Reviews</h2>
             <Review ratting={ratting}></Review>
             <h2 className="text-4xl text-center">Add Review</h2>

@@ -9,7 +9,7 @@ import SearchProduct from "./searcProduct/SearchProduct";
 const Products = () => {
   const { dark } = useContext(ThemContextProvider);
   UseTitle("products");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(true);
   useEffect(() => {
@@ -17,15 +17,13 @@ const Products = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data.data)
-        if(data.success){
+        if (data.success) {
           setProducts(data.data);
-          setLoader(false)
+          setLoader(false);
+        } else {
+          navigate("*");
+          setLoader(false);
         }
-        else{
-          navigate('*')
-          setLoader(false)
-        }
-        
       });
   }, [navigate]);
 
@@ -33,21 +31,17 @@ const Products = () => {
     event.preventDefault();
     const name = event.target.searchName.value;
     fetch(`http://localhost:5000/products/${name}`)
-    .then(res=>res.json())
-    .then(data=>{
-      if(data.success){
-        setProducts(data.data)
-        console.log(data.data)
-      }
-      else{
-        navigate('*')
-      }
-      
-      
-    })
-    
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setProducts(data.data);
+          console.log(data.data);
+        } else {
+          navigate("*");
+        }
+      });
   };
-  
+
   return (
     <div>
       {loader ? (
@@ -58,26 +52,28 @@ const Products = () => {
             dark ? "text-white" : "text-black"
           }`}
         >
-            
-          <div class="mx-auto max-w-lg text-center">
-            <h2 class="text-3xl font-bold sm:text-4xl">Our Products</h2>
+          <div className="mx-auto max-w-lg text-center">
+            <h2 className="text-3xl font-bold sm:text-4xl">Our Products</h2>
           </div>
-         
-            <SearchProduct handleSearch={handleSearch} ></SearchProduct>
-           
-          <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+          <SearchProduct handleSearch={handleSearch}></SearchProduct>
+
+          <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <ProductCard key={product._id} product={product}></ProductCard>
             ))}
           </div>
-          <div className={`flex justify-center my-5 ${loader === false ? 'hidden':'block'}`}>
+          <div
+            className={`flex justify-center my-5 ${
+              loader === false ? "hidden" : "block"
+            }`}
+          >
             <Link to={"/products"} className="btn btn-primary">
               Show all
             </Link>
           </div>
         </div>
       )}
-      
     </div>
   );
 };
