@@ -4,7 +4,7 @@ import office from "../../../assets/office.jpg";
 const About = () => {
   const { dark } = useContext(ThemContextProvider);
   return (
-    <div className={`${dark?'text-white':'text-black'}`}>
+    <div className={`${dark?'text-white':'text-black'} my-20`}>
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left ">

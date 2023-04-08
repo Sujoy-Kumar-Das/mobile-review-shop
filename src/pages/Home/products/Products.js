@@ -26,7 +26,7 @@ const Products = () => {
         <Spiner></Spiner>
       ) : (
         <div
-          className={`my-5 w-4/5 lg:w-full mx-auto ${
+          className={`my-5 w-4/5 lg:w-full mx-auto my-20 ${
             loader ? "hidden" : "block"
           } ${dark ? "text-white" : "text-black"}`}
         >
