@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { Link } from "react-router-dom";
 import UseTitle from "../../../hooks/UseTitle";
+import SocialLogin from "../socialLogin/SocialLogin";
 
 const Login = () => {
   const {dark} = useContext(ThemContextProvider)
@@ -65,6 +66,7 @@ const Login = () => {
         </p>
       </div>
     </form>
+    <SocialLogin value={"Login"}></SocialLogin>
   </div>
   );
 };

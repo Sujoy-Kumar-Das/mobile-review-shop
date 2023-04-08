@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ThemContext from "./context/themContext/ThemContext";
+import AuthContex from "./context/AuthContext/AuthContex";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemContext>
+      <AuthContex>
       <App />
+      </AuthContex>
+      
     </ThemContext>
   </React.StrictMode>
 );

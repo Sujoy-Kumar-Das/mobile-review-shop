@@ -1,10 +1,21 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
+import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
+import { toast } from "react-hot-toast";
 
 
 const Header = () => {
   const { dark, setDark } = useContext(ThemContextProvider);
+  const {user,logOut} = useContext(AuthContextProvider)
+  console.log(user)
+  const handleLogout = ()=>{
+    logOut()
+    .then(result =>{
+      toast.error('User singout successfully')
+    })
+    .catch(error=> console.log(error))
+  }
 
   const menuItems = (
     <>
@@ -73,10 +84,10 @@ const Header = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{menuItems}</ul>
         </div>
-        <div className="navbar-end">
-         
-          <Link to={'/login'} className="btn btn-primary">Login</Link>
-          <Link to={'/singup'} className="btn btn-primary">singup</Link>
+        <div className="navbar-end ">
+          {user ? <button className="btn btn-primary" onClick={handleLogout}>Logout</button>:<Link to={'/login'} className="btn btn-primary">Login</Link>}
+          
+        
         </div>
       </div>
     </div>

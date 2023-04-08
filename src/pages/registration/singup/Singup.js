@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import UseTitle from "../../../hooks/UseTitle";
 import { Link } from "react-router-dom";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
+import SocialLogin from "../socialLogin/SocialLogin";
 
 const Singup = () => {
   const { dark } = useContext(ThemContextProvider)
@@ -162,6 +163,7 @@ const Singup = () => {
           </p>
         </div>
       </form>
+      <SocialLogin value={"Singup"}></SocialLogin>
     </div>
   );
 };
