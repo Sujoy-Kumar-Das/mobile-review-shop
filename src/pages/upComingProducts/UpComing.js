@@ -84,11 +84,6 @@ const UpComing = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-5">
-        <Link to={"/products"} className="btn btn-primary">
-          Show all
-        </Link>
-      </div>
     </div>
   );
 };

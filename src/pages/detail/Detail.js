@@ -5,9 +5,11 @@ import Error from "../404/Error";
 import Review from "./reviews/Review";
 import Comment from "./comment/Comment";
 import Ratting from "./ratting/Ratting";
+import UseTitle from "../../hooks/UseTitle";
 
 const Detail = () => {
   const { dark } = useContext(ThemContextProvider);
+  UseTitle('product-detail')
   const data = useLoaderData();
   const { _id, name, img, price, ratting, detail } = data.data;
 
