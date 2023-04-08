@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 
+
 const Header = () => {
   const { dark, setDark } = useContext(ThemContextProvider);
 
@@ -11,8 +12,7 @@ const Header = () => {
         <Link to={"/home"}>Home</Link>
       </li>
       <li>
-        <Link  to={"/products"}>Products</Link>
-       
+        <Link to={"/products"}>Products</Link>
       </li>
       <li>
         <Link to={"/myreviews"}>My reviews</Link>
@@ -20,11 +20,9 @@ const Header = () => {
       <li>
         <Link to={"/blogs"}>Blogs</Link>
       </li>
-      <li>
-        <Link to={"/login"}>Login</Link>
-      </li>
+
       <li onChange={() => setDark(!dark)}>
-        <p >
+        <p>
           <input
             type="checkbox"
             className="toggle toggle-success"
@@ -61,7 +59,9 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className={`menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-52 ${dark?'bg-slate-950':'bg-white'}`}
+              className={`menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-52 ${
+                dark ? "bg-slate-950" : "bg-white"
+              }`}
             >
               {menuItems}
             </ul>
@@ -74,11 +74,10 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{menuItems}</ul>
         </div>
         <div className="navbar-end">
-          <Link className="btn"> Add service</Link>
+         
+          <Link className="btn btn-primary">Login</Link>
         </div>
       </div>
-      
-
     </div>
   );
 };

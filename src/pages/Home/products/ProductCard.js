@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
         <h2 className="card-title">{name}</h2>
         {detail.length>100?<p>{detail.slice(0,100)+'read more...'}</p>:<p>{detail}</p>}
         <div className="card-actions">
-          <Link to={`/products/${_id}`} className="btn btn-primary">Show Detail</Link>
+          <Link to={`/product/detail/${_id}`} className="btn btn-primary">Show Detail</Link>
           
         </div>
       </div>

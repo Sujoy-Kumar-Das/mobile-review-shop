@@ -3,9 +3,11 @@ import UseTitle from "../../../hooks/UseTitle";
 import ProductCard from "./ProductCard";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { Link } from "react-router-dom";
+import Spiner from "../../shared/loader/Spiner";
 
 const Products = () => {
   const {dark} = useContext(ThemContextProvider)
+  const [loader,setLoader] = useState(true)
   UseTitle("products");
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -14,11 +16,13 @@ const Products = () => {
       .then((data) => {
         // console.log(data.data)
         setProducts(data.data);
+        setLoader(false)
       });
   }, []);
 
   return (
-    <div className={`my-5 w-4/5 lg:w-full mx-auto ${dark ? 'text-white':'text-black'}`}>
+    <div>
+      {loader ? <Spiner></Spiner>: <div className={`my-5 w-4/5 lg:w-full mx-auto ${loader ? 'hidden':'block'} ${dark ? 'text-white':'text-black'}`}>
       <div class="mx-auto max-w-lg text-center">
         <h2 class="text-3xl font-bold sm:text-4xl">Our products</h2>
       </div>
@@ -30,6 +34,7 @@ const Products = () => {
       <div className="flex justify-center my-5">
         <Link to={'/products'} className="btn btn-primary">Show all</Link>
       </div>
+    </div>}
     </div>
   );
 };

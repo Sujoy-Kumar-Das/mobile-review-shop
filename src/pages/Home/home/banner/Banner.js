@@ -1,5 +1,6 @@
 import React from "react";
 import banner from '../../../../assets/banner.jpg'
+import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div
@@ -19,7 +20,7 @@ const Banner = () => {
           <p className="mb-5">
             We provide latest smart phone's and verious electronic products.Let's start shoping with us.
           </p>
-          <button className="btn btn-primary">Checkout</button>
+          <Link to={'/products'} className="btn btn-primary">Checkout</Link>
         </div>
       </div>
     </div>
