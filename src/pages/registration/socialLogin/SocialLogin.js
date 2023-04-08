@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
+import { toast } from "react-hot-toast";
 
 const SocialLogin = ({value}) => {
     const {googleSingIn} = useContext(AuthContextProvider)
@@ -8,6 +9,7 @@ const SocialLogin = ({value}) => {
         googleSingIn()
         .then(result=>{
             const user = result.user;
+            toast.success(`${value} successfull`)
             console.log(user)
         })
         .catch(error=>console.log(error))
