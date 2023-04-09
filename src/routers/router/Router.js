@@ -6,6 +6,7 @@ import AllProducts from "../../pages/allProduct/AllProducts";
 import Detail from "../../pages/detail/Detail";
 import Login from "../../pages/registration/login/Login";
 import Singup from "../../pages/registration/singup/Singup";
+import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       element:<Detail></Detail>},
       {path:'/login',element:<Login></Login>},
       {path:'/singup',element:<Singup></Singup>},
+      {path:'/resetPassword',element:<PasswordReset></PasswordReset>},
       {path: "*", element: <Error></Error> },
     ],
   },

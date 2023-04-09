@@ -4,9 +4,13 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updatePhoneNumber,
+  updateProfile,
 } from "firebase/auth";
 import app from "../../firebase/Firebase.init";
 
@@ -29,13 +33,31 @@ const AuthContex = ({ children }) => {
     return signInWithEmailAndPassword(auth,email,password)
   }
 
+  const updateUser = (userInfo)=>{
+    return updateProfile(auth.currentUser,userInfo)
+  }
+
   const logOut = () => {
     return signOut(auth);
   };
 
+  const updateUserPhone = (phone)=>{
+    return updatePhoneNumber(auth.currentUser,phone)
+  }
+
+  const verifyEmail = ()=>{
+    return sendEmailVerification(auth.currentUser)
+  }
+
+  const passwordReset = (email)=>{
+    return sendPasswordResetEmail(auth,email)
+  }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if(currentUser === null || currentUser.emailVerified ){
+        setUser(currentUser);
+      }
+      
     });
     return () => {
       unsubscribe();
@@ -47,6 +69,10 @@ const AuthContex = ({ children }) => {
     googleSingIn,
     singUpWithEmailAndPass,
     loginWithEmailAndPass,
+    updateUser,
+    updateUserPhone,
+    verifyEmail,
+    passwordReset,
     logOut,
   };
   return (

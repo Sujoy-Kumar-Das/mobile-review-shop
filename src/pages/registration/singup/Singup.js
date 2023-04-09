@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UseTitle from "../../../hooks/UseTitle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import SocialLogin from "../socialLogin/SocialLogin";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
@@ -8,32 +8,78 @@ import { toast } from "react-hot-toast";
 
 const Singup = () => {
   const { dark } = useContext(ThemContextProvider);
-  const { singUpWithEmailAndPass } = useContext(AuthContextProvider);
+  const { singUpWithEmailAndPass, updateUser, verifyEmail } =
+    useContext(AuthContextProvider);
   UseTitle("singup");
+  const Navigate = useNavigate();
   const [checked, setChecked] = useState(true);
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const firstName = form.first_name.value;
     const lastName = form.last_name.value;
+    const fullName = `${firstName} ${lastName}`;
     const email = form.email.value;
-    const mobile = form.phone.value;
     const password = form.password.value;
     const confrimPassword = form.confrim_password.value;
-    let pass;
-    if (password === confrimPassword) {
-      pass = confrimPassword;
-      singUpWithEmailAndPass(email, pass)
-        .then((result) => {
-          const user = result.user;
-          toast.success("Registration successfully");
-          console.log(user);
-        })
-        .catch((error) => console.log(error));
-    } else {
-      toast.error("Please Check your password");
+    const userInfo = {
+      displayName: fullName,
+    };
+
+    if (password !== confrimPassword) {
+      toast.error("Password and confrim password should be same");
+      return;
     }
+    if (!/(?=.*[A-Z])/.test(password)) {
+      toast.error("Your password should have a upper case letter");
+      return;
+    }
+    if (!/(?=.*[a-z])/.test(password)) {
+      toast.error("Your password should have a lower case letter");
+      return;
+    }
+    if (!/(?=.*\d)/.test(password)) {
+      toast.error("Your password should have a digit");
+      return;
+    }
+    if (!/(?=.*[a-zA-Z >>!#$%&? "<<])[a-zA-Z0-9 >>!#$%&?<< ]/.test(password)) {
+      toast.error("Your password should have a spacial charecter");
+      return;
+    }
+    if (password.length < 8) {
+      toast.error("Your password should have 8 charecters");
+      return;
+    }
+    singUpWithEmailAndPass(email, password)
+      .then((result) => {
+        const user = result.user;
+        verifyEmail()
+          .then((result) => {
+            toast.success("Please check your email and verify")
+            Navigate('/login')
+            form.reset();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        
+        console.log(user);
+        updateUser(userInfo)
+          .then((result) => console.log(result))
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => {
+        const message = error.message;
+        console.log(message);
+        toast.error(
+          message.replace(
+            "Firebase: Error (auth/email-already-in-use).",
+            "This email already had an accound please login"
+          )
+        );
+      });
   };
+
   return (
     <div className={`w-4/5 mx-auto lg:w-full my-10 ${dark && "text-white"}`}>
       <h2 className=" text-4xl text-center font-semibold mb-10">
@@ -55,7 +101,7 @@ const Singup = () => {
               required
             />
             <label
-              for="floating_first_name"
+              htmlhtmlFor="floating_first_name"
               className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                 dark && "text-white peer-focus:text-blue-500"
               }`}
@@ -78,7 +124,7 @@ const Singup = () => {
               required
             />
             <label
-              for="floating_last_name"
+              htmlhtmlFor="floating_last_name"
               className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                 dark && "text-white peer-focus:text-blue-500"
               }`}
@@ -102,7 +148,7 @@ const Singup = () => {
             required
           />
           <label
-            for="floating_email"
+            htmlhtmlFor="floating_email"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -124,7 +170,7 @@ const Singup = () => {
             required
           />
           <label
-            for="floating_password"
+            htmlhtmlFor="floating_password"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -146,7 +192,7 @@ const Singup = () => {
             required
           />
           <label
-            for="floating_repeat_password"
+            htmlhtmlFor="floating_repeat_password"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -154,30 +200,9 @@ const Singup = () => {
             Confirm password
           </label>
         </div>
-        <div className="relative z-0 w-full mb-6 group">
-          <input
-            type="tel"
-            name="phone"
-            id="floating_phone"
-            className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none 
-            ${
-              dark &&
-              "text-white border-white-600 focus:border-blue-500  focus:ring-0"
-            } focus:border-blue-600 peer focus:outline-none`}
-            placeholder=" "
-            required
-          />
-          <label
-            for="floating_phone"
-            className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
-              dark && "text-white peer-focus:text-blue-500"
-            }`}
-          >
-            Phone number
-          </label>
-        </div>
+
         <div className="col-span-6">
-          <label for="MarketingAccept" className="flex gap-4">
+          <label htmlhtmlFor="MarketingAccept" className="flex gap-4">
             <input
               onClick={() => {
                 setChecked(!checked);

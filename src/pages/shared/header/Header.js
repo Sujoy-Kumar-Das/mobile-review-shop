@@ -4,18 +4,17 @@ import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 import { toast } from "react-hot-toast";
 
-
 const Header = () => {
   const { dark, setDark } = useContext(ThemContextProvider);
-  const {user,logOut} = useContext(AuthContextProvider)
-  console.log(user)
-  const handleLogout = ()=>{
+  const { user, logOut } = useContext(AuthContextProvider);
+  console.log(user);
+  const handleLogout = () => {
     logOut()
-    .then(result =>{
-      toast.error('User singout successfully')
-    })
-    .catch(error=> console.log(error))
-  }
+      .then((result) => {
+        toast.error("User singout successfully");
+      })
+      .catch((error) => console.log(error));
+  };
 
   const menuItems = (
     <>
@@ -25,9 +24,11 @@ const Header = () => {
       <li>
         <Link to={"/products"}>Products</Link>
       </li>
-      <li>
-        <Link to={"/myreviews"}>My reviews</Link>
-      </li>
+      {user && (
+        <li>
+          <Link to={"/myreviews"}>My reviews</Link>
+        </li>
+      )}
       <li>
         <Link to={"/blogs"}>Blogs</Link>
       </li>
@@ -36,8 +37,9 @@ const Header = () => {
         <p>
           <input
             type="checkbox"
-            className="toggle toggle-success"
+            className=" toggle toggle-success"
             checked={dark ? "checked" : ""}
+            onChange={e => {}}
           />
         </p>
       </li>
@@ -85,9 +87,15 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{menuItems}</ul>
         </div>
         <div className="navbar-end ">
-          {user ? <button className="btn btn-primary" onClick={handleLogout}>Logout</button>:<Link to={'/login'} className="btn btn-primary">Login</Link>}
-          
-        
+          {user ? (
+            <button className="btn btn-primary" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <Link to={"/login"} className="btn btn-primary">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
