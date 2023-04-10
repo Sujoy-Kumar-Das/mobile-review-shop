@@ -7,7 +7,6 @@ import { toast } from "react-hot-toast";
 const Header = () => {
   const { dark, setDark } = useContext(ThemContextProvider);
   const { user, logOut } = useContext(AuthContextProvider);
-  console.log(user);
   const handleLogout = () => {
     logOut()
       .then((result) => {
@@ -33,13 +32,17 @@ const Header = () => {
         <Link to={"/blogs"}>Blogs</Link>
       </li>
 
-      <li onChange={() => setDark(!dark)}>
+      <li
+        onChange={() => {
+          setDark(!dark);
+        }}
+      >
         <p>
           <input
             type="checkbox"
             className=" toggle toggle-success"
             checked={dark ? "checked" : ""}
-            onChange={e => {}}
+            onChange={(e) => {}}
           />
         </p>
       </li>

@@ -55,14 +55,14 @@ const Singup = () => {
         const user = result.user;
         verifyEmail()
           .then((result) => {
-            toast.success("Please check your email and verify")
-            Navigate('/login')
+            toast.success("Please check your email and verify");
+            Navigate("/login");
             form.reset();
           })
           .catch((error) => {
             console.log(error);
           });
-        
+
         console.log(user);
         updateUser(userInfo)
           .then((result) => console.log(result))
@@ -101,7 +101,7 @@ const Singup = () => {
               required
             />
             <label
-              htmlhtmlFor="floating_first_name"
+              htmlFor="floating_first_name"
               className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                 dark && "text-white peer-focus:text-blue-500"
               }`}
@@ -124,7 +124,7 @@ const Singup = () => {
               required
             />
             <label
-              htmlhtmlFor="floating_last_name"
+              htmlFor="floating_last_name"
               className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
                 dark && "text-white peer-focus:text-blue-500"
               }`}
@@ -148,7 +148,7 @@ const Singup = () => {
             required
           />
           <label
-            htmlhtmlFor="floating_email"
+            htmlFor="floating_email"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -170,7 +170,7 @@ const Singup = () => {
             required
           />
           <label
-            htmlhtmlFor="floating_password"
+            htmlFor="floating_password"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -192,7 +192,7 @@ const Singup = () => {
             required
           />
           <label
-            htmlhtmlFor="floating_repeat_password"
+            htmlFor="floating_repeat_password"
             className={` peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 ${
               dark && "text-white peer-focus:text-blue-500"
             }`}
@@ -202,7 +202,7 @@ const Singup = () => {
         </div>
 
         <div className="col-span-6">
-          <label htmlhtmlFor="MarketingAccept" className="flex gap-4">
+          <label htmlFor="MarketingAccept" className="flex gap-4">
             <input
               onClick={() => {
                 setChecked(!checked);

@@ -7,7 +7,7 @@ const SearchProduct = ({ handleSearch }) => {
         onSubmit={handleSearch}
         className="flex items-center w-full lg:w-1/2 mx-auto mt-5"
       >
-        <label htmlhtmlhtmlFor="simple-search" className="sr-only">
+        <label htmlhtmlFor="simple-search" className="sr-only">
           Search
         </label>
         <div className="relative w-full">

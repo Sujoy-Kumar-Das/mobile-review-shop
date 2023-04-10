@@ -1,22 +1,59 @@
 import React, { useContext } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
+import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
+import { toast } from "react-hot-toast";
 
-const Comment = () => {
+const Comment = ({ data }) => {
   const { dark } = useContext(ThemContextProvider);
+  const { user } = useContext(AuthContextProvider);
+  const { _id, name, img, price, ratting } = data;
+  const handleReview = (event) => {
+    event.preventDefault();
+    const comment = event.target.comment.value;
+    const review = {
+      productId: _id,
+      productName: name,
+      img: img,
+      price: price,
+      ratting: ratting,
+      comment: comment,
+      userInfo: {
+        userName: user.displayName,
+        userEmail: user.email,
+        photo: user.photoURL,
+      },
+    };
+    fetch("http://localhost:5000/review", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(review),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      });
+  };
   return (
     <div>
-      <form className="my-5">
+      <form onSubmit={handleReview} className="my-5">
         <div
           className={`lg:w-full w-4/5 mx-auto  mb-4 border  rounded-lg ${
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
           }`}
         >
           <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-            <label htmlhtmlFor="comment" className="sr-only">
+            <label htmlFor="comment" className="sr-only">
               Your comment
             </label>
             <textarea
               id="comment"
+              name="comment"
               rows="4"
               className={`w-full px-0 text-sm  border-0
               ${
