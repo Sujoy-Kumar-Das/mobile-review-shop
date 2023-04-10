@@ -34,9 +34,11 @@ const Comment = ({ data }) => {
       .then((data) => {
         if (data.success) {
           toast.success(data.message);
+          event.target.reset();
         } else {
           toast.error(data.message);
         }
+        
       });
   };
   return (

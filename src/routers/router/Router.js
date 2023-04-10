@@ -7,7 +7,6 @@ import Detail from "../../pages/detail/Detail";
 import Login from "../../pages/registration/login/Login";
 import Singup from "../../pages/registration/singup/Singup";
 import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
-import UpdateField from "../../pages/detail/updateField/UpdateField";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +22,6 @@ export const router = createBrowserRouter([
       {path:'/login',element:<Login></Login>},
       {path:'/singup',element:<Singup></Singup>},
       {path:'/resetPassword',element:<PasswordReset></PasswordReset>},
-      {path:'/update/review',element:<UpdateField></UpdateField>},
       {path: "*", element: <Error></Error> },
     ],
   },

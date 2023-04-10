@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Ratting from "../ratting/Ratting";
-import { Link } from "react-router-dom";
+import UpdateField from "../updateField/UpdateField";
+import { toast } from "react-hot-toast";
 
 const Review = ({ review }) => {
-  console.log(review)
-  const {_id,productName,comment,userInfo} = review
-  const handleEdit = ()=>{
-    fetch(`http://localhost:5000/review/edit/${_id}`,{
-
+  // console.log(review)
+  const [show,setShow] = useState(false)
+  const {_id,productName,comment,userInfo} = review;
+ 
+ 
+  const handleDelete = (id)=>{
+    const promot = window.confirm(`Are you sure you want to delete ${productName} review`)
+    console.log(promot)
+    if(promot){
+      fetch(`http://localhost:5000/deleteReview/${id}`,{
+      method:"DELETE"
     })
+    .then(res=>res.json())
+    .then(data=>{
+      toast.success(`Succesfully deleted ${userInfo.userName} review in ${productName}`)
+    })
+    }
+    else{
+      toast.error('You canceld the deleteation')
+    }
+    
   }
   return (
     <div className="mx-auto w-4/5 lg:w-full my-5 border border-gray-200 rounded-lg p-5">
@@ -32,17 +48,21 @@ const Review = ({ review }) => {
             <cite className="pr-3 font-medium">
               {userInfo.userName}
             </cite>
-            <cite onClick={handleEdit} className="pr-3 font-medium cursor-default hover:underline">
-              <Link to={`/update/review`}>Edit</Link>
+            <cite onClick={()=>{setShow(!show)}} className="pr-3 font-medium cursor-default hover:underline">
+              Edit
+              
               
             </cite>
-            <cite className="pr-3 font-medium cursor-default hover:underline	">
+            <cite onClick={()=>{handleDelete(_id)}} className="pr-3 font-medium cursor-default hover:underline	">
                 Delete
             </cite>
             
           </div>
         </figcaption>
       </figure>
+      <div className={` ${show ? 'block':'hidden'} `}>
+      <UpdateField id={_id}></UpdateField>
+      </div>
     </div>
   );
 };
