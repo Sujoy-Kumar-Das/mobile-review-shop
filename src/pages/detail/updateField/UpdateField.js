@@ -1,24 +1,37 @@
-import React, { useContext } from 'react';
-import { ThemContextProvider } from '../../../context/themContext/ThemContext';
+import React, { useContext, useState } from "react";
+import { ThemContextProvider } from "../../../context/themContext/ThemContext";
+import { toast } from "react-hot-toast";
+const UpdateField = ({ review }) => {
+  const { dark } = useContext(ThemContextProvider);
 
-const UpdateField = ({_id}) => {
-    const {dark} = useContext(ThemContextProvider)
-    const handleUpdateReview = event=>{
-        event.preventDefault();
-        const updatedComment = event.target.updateComment.value;
-        // console.log(updateComment)
-        // fetch(`http://localhost:5000/updateReview/${_id}`,{
-        //     method:"PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       body: JSON.stringify(updatedComment),
-        // })
-        // .then(res=>res.json())
-        // .then(data=>console.log(data))
-    }
-    return (
-        <form onSubmit={handleUpdateReview} className="my-5">
+  const { _id, comment,productName } = review;
+
+  const [newComment, setNewComment] = useState({ comment });
+
+  const handleChange = (event) => {
+    const newMessage = { comment: event.target.value };
+    setNewComment(newMessage);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch(`http://localhost:5000/update/review?id=${_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.modifiedCount){
+          toast.success(`${productName} review updated successfully`)
+        }
+        else{
+          toast.error("Please add a review")
+        }
+      });
+  };
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="my-5">
         <div
           className={`lg:w-full w-4/5 mx-auto  mb-4 border  rounded-lg ${
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
@@ -29,8 +42,9 @@ const UpdateField = ({_id}) => {
               Your comment
             </label>
             <textarea
+              onChange={handleChange}
               id="comment"
-              name="updateComment"
+              name="comment"
               rows="4"
               className={`w-full px-0 text-sm  border-0
               ${
@@ -39,7 +53,7 @@ const UpdateField = ({_id}) => {
                   : "text-gray-900 bg-white"
               }
                `}
-              placeholder={`Update review...`}
+              placeholder={`${comment}`}
               required
             ></textarea>
           </div>
@@ -112,7 +126,8 @@ const UpdateField = ({_id}) => {
           </div>
         </div>
       </form>
-    );
+    </div>
+  );
 };
 
 export default UpdateField;

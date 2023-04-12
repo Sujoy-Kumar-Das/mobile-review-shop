@@ -47,7 +47,8 @@ const Detail = () => {
             </div>
           </div>
           <div className=" mt-20">
-            <h2 className="text-4xl text-center">Reviews</h2>
+            {/* {console.log(reviews.length)} */}
+            <h2 className={`text-4xl text-center ${reviews.length>=1 ? 'block':'hidden'}`}>Reviews</h2>
             {
               reviews.map(review => <Review key={review._id} review={review} ratting={ratting}></Review>)
             }

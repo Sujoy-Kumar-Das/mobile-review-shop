@@ -1,67 +1,59 @@
 import React, { useState } from "react";
-import Ratting from "../ratting/Ratting";
-import UpdateField from "../updateField/UpdateField";
 import { toast } from "react-hot-toast";
+import UpdateField from "../updateField/UpdateField";
 
 const Review = ({ review }) => {
-  // console.log(review)
-  const [show,setShow] = useState(false)
-  const {_id,productName,comment,userInfo} = review;
- 
- 
-  const handleDelete = (id)=>{
-    const promot = window.confirm(`Are you sure you want to delete ${productName} review`)
-    console.log(promot)
-    if(promot){
-      fetch(`http://localhost:5000/deleteReview/${id}`,{
-      method:"DELETE"
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      toast.success(`Succesfully deleted ${userInfo.userName} review in ${productName}`)
-    })
+  const { _id, productName, comment, userInfo } = review;
+  const [show, setShow] = useState(false);
+  const handleDelete = (id) => {
+    const promot = window.confirm(
+      `Are you sure you want to delete ${productName} review`
+    );
+    if (promot) {
+      fetch(`http://localhost:5000/review/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          toast.success(
+            `Succesfully deleted ${userInfo.userName} review in ${productName}`
+          );
+        });
+    } else {
+      toast.error("You canceld the deleteation");
     }
-    else{
-      toast.error('You canceld the deleteation')
-    }
-    
-  }
+  };
   return (
     <div className="mx-auto w-4/5 lg:w-full my-5 border border-gray-200 rounded-lg p-5">
       <figure>
         {/* <Ratting ratting={ratting}></Ratting> */}
         <blockquote>
-        <p className="text-2xl font-semibold ">
-            {productName}
-          </p>
-          <p className="text-2xl font-semibold ">
-            "{comment}"
-          </p>
+          <p className="text-2xl font-semibold ">{productName}</p>
+          <p className="text-2xl font-semibold ">"{comment}"</p>
         </blockquote>
         <figcaption className="flex items-center mt-6 space-x-3">
-          <img
-            alt=""
-            className="w-6 h-6 rounded-full"
-            src={userInfo.photo}
-          />
+          <img alt="" className="w-6 h-6 rounded-full" src={userInfo.photo} />
           <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
-            <cite className="pr-3 font-medium">
-              {userInfo.userName}
-            </cite>
-            <cite onClick={()=>{setShow(!show)}} className="pr-3 font-medium cursor-default hover:underline">
+            <cite className="pr-3 font-medium">{userInfo.userName}</cite>
+            <cite
+              onClick={() => setShow(!show)}
+              className="pr-3 font-medium cursor-default hover:underline"
+            >
               Edit
-              
-              
             </cite>
-            <cite onClick={()=>{handleDelete(_id)}} className="pr-3 font-medium cursor-default hover:underline	">
-                Delete
+            <cite
+              onClick={() => {
+                handleDelete(_id);
+              }}
+              className="pr-3 font-medium cursor-default hover:underline	"
+            >
+              Delete
             </cite>
-            
           </div>
         </figcaption>
       </figure>
-      <div className={` ${show ? 'block':'hidden'} `}>
-      <UpdateField id={_id}></UpdateField>
+      <div className={`${show ? "block" : "hidden"}`}>
+        <UpdateField review={review}></UpdateField>
       </div>
     </div>
   );

@@ -13,16 +13,41 @@ export const router = createBrowserRouter([
     path: "/",
     element: <Main></Main>,
     children: [
-      {path: "/", element: <Home></Home> },
-      {path: "/home", element: <Home></Home> },
-      {path:'/products',element:<AllProducts></AllProducts>},
-      {path:'/product/detail/:id',
-      loader:({params})=>{return fetch(`http://localhost:5000/product/detail/${params.id}`)},
-      element:<Detail></Detail>},
-      {path:'/login',element:<Login></Login>},
-      {path:'/singup',element:<Singup></Singup>},
-      {path:'/resetPassword',element:<PasswordReset></PasswordReset>},
-      {path: "*", element: <Error></Error> },
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/home",
+        element: <Home></Home>,
+      },
+      {
+        path: "/products",
+        element: <AllProducts></AllProducts>,
+      },
+      {
+        path: "/product/detail/:id",
+        loader: ({ params }) => {
+          return fetch(`http://localhost:5000/product/detail/${params.id}`);
+        },
+        element: <Detail></Detail>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/singup",
+        element: <Singup></Singup>,
+      },
+      {
+        path: "/resetPassword",
+        element: <PasswordReset></PasswordReset>,
+      },
+      {
+        path: "*",
+        element: <Error></Error>,
+      },
     ],
   },
 ]);
