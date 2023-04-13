@@ -17,6 +17,7 @@ const Comment = ({ data }) => {
       price: price,
       ratting: ratting,
       comment: comment,
+      date:Date(),
       userInfo: {
         userName: user.displayName,
         userEmail: user.email,
@@ -35,21 +36,21 @@ const Comment = ({ data }) => {
         if (data.success) {
           toast.success(data.message);
           event.target.reset();
+          
         } else {
           toast.error(data.message);
         }
-        
       });
   };
   return (
     <div>
-      <form onSubmit={handleReview} className="my-5">
+      <form onSubmit={handleReview} className="my-5 w-full">
         <div
           className={`lg:w-full w-4/5 mx-auto  mb-4 border  rounded-lg ${
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
           }`}
         >
-          <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+          <div className=" bg-white rounded-t-lg dark:bg-gray-800">
             <label htmlFor="comment" className="sr-only">
               Your comment
             </label>
@@ -57,7 +58,7 @@ const Comment = ({ data }) => {
               id="comment"
               name="comment"
               rows="4"
-              className={`w-full px-0 text-sm  border-0
+              className={`w-full  text-sm  border-0 px-4 pt-2
               ${
                 dark
                   ? "bg-gray-800 focus:ring-0 text-white placeholder-gray-400"
@@ -68,10 +69,16 @@ const Comment = ({ data }) => {
               required
             ></textarea>
           </div>
-          <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+          <div
+            className={`flex items-center justify-between px-3 py-2 border-t ${
+              dark && "border-gray-600"
+            }`}
+          >
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+              className={`${
+                dark && "hover:bg-blue-800 focus:ring-blue-900"
+              }inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200`}
             >
               Add Review
             </button>

@@ -4,12 +4,15 @@ import { toast } from "react-hot-toast";
 const UpdateField = ({ review }) => {
   const { dark } = useContext(ThemContextProvider);
 
-  const { _id, comment,productName } = review;
+  const { _id, comment, productName } = review;
 
   const [newComment, setNewComment] = useState({ comment });
-
+  
   const handleChange = (event) => {
-    const newMessage = { comment: event.target.value };
+    const newMessage = { 
+      comment: event.target.value,
+      date:Date()
+     };
     setNewComment(newMessage);
   };
   const handleSubmit = (event) => {
@@ -21,11 +24,12 @@ const UpdateField = ({ review }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.modifiedCount){
-          toast.success(`${productName} review updated successfully`)
-        }
-        else{
-          toast.error("Please add a review")
+        if (data.modifiedCount) {
+          toast.success(`${productName} review updated successfully`);
+          event.target.reset();
+          
+        } else {
+          toast.error("Please add a review");
         }
       });
   };
@@ -37,7 +41,7 @@ const UpdateField = ({ review }) => {
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
           }`}
         >
-          <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
+          <div className=" bg-white rounded-t-lg dark:bg-gray-800">
             <label htmlFor="comment" className="sr-only">
               Your comment
             </label>
@@ -46,7 +50,7 @@ const UpdateField = ({ review }) => {
               id="comment"
               name="comment"
               rows="4"
-              className={`w-full px-0 text-sm  border-0
+              className={`w-full  text-sm  border-0 px-4 pt-2
               ${
                 dark
                   ? "bg-gray-800 focus:ring-0 text-white placeholder-gray-400"
@@ -57,10 +61,17 @@ const UpdateField = ({ review }) => {
               required
             ></textarea>
           </div>
-          <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
+          <div
+            className={`flex items-center justify-between px-3 py-2 border-t ${
+              dark && "border-gray-600"
+            }`}
+          >
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+              c
+              className={`${
+                dark && "hover:bg-blue-800 focus:ring-blue-900"
+              }inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200`}
             >
               Update Review
             </button>

@@ -35,6 +35,7 @@ const Review = ({ review }) => {
           <img alt="" className="w-6 h-6 rounded-full" src={userInfo.photo} />
           <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
             <cite className="pr-3 font-medium">{userInfo.userName}</cite>
+            
             <cite
               onClick={() => setShow(!show)}
               className="pr-3 font-medium cursor-default hover:underline"
@@ -49,7 +50,9 @@ const Review = ({ review }) => {
             >
               Delete
             </cite>
+            {review?.date?.length>25 ? <cite className="pr-3 font-medium">{review.date.slice(0,25)}</cite>:''}
           </div>
+          
         </figcaption>
       </figure>
       <div className={`${show ? "block" : "hidden"}`}>

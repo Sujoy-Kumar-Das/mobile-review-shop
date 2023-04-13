@@ -9,31 +9,35 @@ import UseTitle from "../../hooks/UseTitle";
 
 const Detail = () => {
   const { dark } = useContext(ThemContextProvider);
-  UseTitle('product-detail')
+  const [reviews, setReviews] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  UseTitle("product-detail");
   const data = useLoaderData();
   const { _id, name, img, price, ratting, detail } = data.data;
-  const [reviews,setReviews] = useState([])
-  const [refresh,setRefresh] = useState(false)
-  useEffect(()=>{
+
+  // get reviews by product id
+  useEffect(() => {
     fetch(`http://localhost:5000/review/${_id}`)
-    .then(res => res.json())
-    .then(data => {
-      setReviews(data.data)
-      setRefresh(!refresh)
-    })
-  },[_id ,refresh])
+      .then((res) => res.json())
+      .then((data) => {
+        setReviews(data.data);
+        setRefresh(!refresh);
+      });
+  }, [_id, refresh]);
+
   return (
     <div>
       {data.success ? (
-        <div className={`my-5 ${
-          dark ? "bg-gray-900 text-white" : "bg-white"
-        }`}>
+        <div>
           <div
-            className={`card  shadow-xl  transition hover:border-pink-500/10 hover:shadow-pink-500/10`}
+            className={`card rounded my-5 ${
+              dark ? "bg-gray-800 text-white" : "bg-white"
+            }`}
           >
             <figure className="px-10 pt-10">
               <img src={img} alt={`${name} pic`} className="rounded-xl" />
             </figure>
+
             <div className="card-body items-center text-center">
               <h2 className="card-title">{name}</h2>
               <p className=" font-semibold text-lg">Price : {price} Tk</p>
@@ -46,12 +50,28 @@ const Detail = () => {
               </p>
             </div>
           </div>
-          <div className=" mt-20">
-            {/* {console.log(reviews.length)} */}
-            <h2 className={`text-4xl text-center ${reviews.length>=1 ? 'block':'hidden'}`}>Reviews</h2>
-            {
-              reviews.map(review => <Review key={review._id} review={review} ratting={ratting}></Review>)
-            }
+
+          <div
+            className={` ${
+              reviews.length >= 1 ? "block" : "hidden"
+            } rounded my-5 p-0 pb-10 lg:p-10 ${
+              dark ? "bg-gray-800 text-white" : "bg-white"
+            }`}
+          >
+            <h2 className={`text-4xl text-center`}>Reviews</h2>
+            {reviews.map((review) => (
+              <Review
+                key={review._id}
+                review={review}
+                ratting={ratting}
+              ></Review>
+            ))}
+          </div>
+          <div
+            className={` rounded my-5 p-0 pb-10 lg:p-10 ${
+              dark ? "bg-gray-800 text-white" : "bg-white"
+            }`}
+          >
             <h2 className="text-4xl text-center">Add Review</h2>
             <Comment data={data.data}></Comment>
           </div>

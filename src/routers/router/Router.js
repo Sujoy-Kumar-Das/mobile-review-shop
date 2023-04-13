@@ -7,6 +7,7 @@ import Detail from "../../pages/detail/Detail";
 import Login from "../../pages/registration/login/Login";
 import Singup from "../../pages/registration/singup/Singup";
 import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
+import MyReview from "../../pages/myReview/MyReview";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "/resetPassword",
         element: <PasswordReset></PasswordReset>,
+      },
+      {
+        path:'/myreviews',
+        element:<MyReview></MyReview>
       },
       {
         path: "*",
