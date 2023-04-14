@@ -30,7 +30,8 @@ const Login = () => {
   };
   return (
     <div
-      className={` pt-44 w-4/5 mx-auto lg:w-full my-10 ${dark && "text-white"}`}
+      style={{height:"418px"}}
+      className={`  w-4/5 mx-auto lg:w-full my-10 ${dark && "text-white"}`}
     >
       <h2 className=" text-4xl text-center font-semibold mb-10">Login now !</h2>
       <form onSubmit={handleLogin}>

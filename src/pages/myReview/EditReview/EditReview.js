@@ -1,50 +1,43 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
-import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 import { toast } from "react-hot-toast";
-
-const Comment = ({ data }) => {
+import { useLoaderData } from "react-router-dom";
+import UseTitle from "../../../hooks/UseTitle";
+const EditReview = () => {
   const { dark } = useContext(ThemContextProvider);
-  const { user } = useContext(AuthContextProvider);
-  const { _id, name, img, price, ratting } = data;
-  const handleReview = (event) => {
+    const {data} = useLoaderData()
+  const { _id, comment, productName } = data;
+  UseTitle("update-comment")
+  const [newComment, setNewComment] = useState({ comment });
+  
+  const handleChange = (event) => {
+    const newMessage = { 
+      comment: event.target.value,
+      date:Date()
+     };
+    setNewComment(newMessage);
+  };
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const comment = event.target.comment.value;
-    const review = {
-      productId: _id,
-      productName: name,
-      img: img,
-      price: price,
-      ratting: ratting,
-      comment: comment,
-      date:Date(),
-      
-        userName: user.displayName,
-        userEmail: user.email,
-        userPhoto: user.photoURL,
-      
-    };
-    fetch("http://localhost:5000/review", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(review),
+    fetch(`http://localhost:5000/update/review?id=${_id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newComment),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          toast.success(data.message);
+        if (data.modifiedCount) {
+          toast.success(`${productName} review updated successfully`);
           event.target.reset();
           
         } else {
-          toast.error(data.message);
+          toast.error("Please add a review");
         }
       });
   };
   return (
     <div>
-      <form onSubmit={handleReview} className="my-5 w-full">
+      <form onSubmit={handleSubmit} className="my-5">
         <div
           className={`lg:w-full w-4/5 mx-auto  mb-4 border  rounded-lg ${
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
@@ -55,6 +48,7 @@ const Comment = ({ data }) => {
               Your comment
             </label>
             <textarea
+              onChange={handleChange}
               id="comment"
               name="comment"
               rows="4"
@@ -65,7 +59,7 @@ const Comment = ({ data }) => {
                   : "text-gray-900 bg-white"
               }
                `}
-              placeholder="Write a review..."
+              placeholder={`${comment}`}
               required
             ></textarea>
           </div>
@@ -76,11 +70,12 @@ const Comment = ({ data }) => {
           >
             <button
               type="submit"
+              c
               className={`${
                 dark && "hover:bg-blue-800 focus:ring-blue-900"
               }inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200`}
             >
-              Add Review
+              Update Review
             </button>
             <div className="flex pl-0 space-x-1 sm:pl-2">
               <button
@@ -148,4 +143,4 @@ const Comment = ({ data }) => {
   );
 };
 
-export default Comment;
+export default EditReview;

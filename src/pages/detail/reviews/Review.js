@@ -3,12 +3,14 @@ import { toast } from "react-hot-toast";
 import UpdateField from "../updateField/UpdateField";
 
 const Review = ({ review }) => {
-  const { _id, productName, comment, userInfo } = review;
+  const { _id, productName, comment, userPhoto,userName } = review;
   const [show, setShow] = useState(false);
+  // console.log(userPhoto)
   const handleDelete = (id) => {
     const promot = window.confirm(
       `Are you sure you want to delete ${productName} review`
     );
+    
     if (promot) {
       fetch(`http://localhost:5000/review/${id}`, {
         method: "DELETE",
@@ -16,7 +18,7 @@ const Review = ({ review }) => {
         .then((res) => res.json())
         .then((data) => {
           toast.success(
-            `Succesfully deleted ${userInfo.userName} review in ${productName}`
+            `Succesfully deleted ${userName} review in ${productName}`
           );
         });
     } else {
@@ -32,9 +34,9 @@ const Review = ({ review }) => {
           <p className="text-2xl font-semibold ">"{comment}"</p>
         </blockquote>
         <figcaption className="flex items-center mt-6 space-x-3">
-          <img alt="" className="w-6 h-6 rounded-full" src={userInfo.photo} />
+          <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />
           <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
-            <cite className="pr-3 font-medium">{userInfo.userName}</cite>
+            <cite className="pr-3 font-medium">{userName}</cite>
             
             <cite
               onClick={() => setShow(!show)}

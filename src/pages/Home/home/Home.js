@@ -8,7 +8,7 @@ import UpComing from "../../upComingProducts/UpComing";
 const Home = () => {
   UseTitle("Home");
   return (
-    <div>
+    <div >
       <Banner></Banner>
       <Products></Products>
       <UpComing></UpComing>

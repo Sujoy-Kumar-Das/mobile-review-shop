@@ -8,7 +8,7 @@ import Login from "../../pages/registration/login/Login";
 import Singup from "../../pages/registration/singup/Singup";
 import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
 import MyReview from "../../pages/myReview/MyReview";
-
+import EditReview from '../../pages/myReview/EditReview/EditReview'
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +48,11 @@ export const router = createBrowserRouter([
       {
         path:'/myreviews',
         element:<MyReview></MyReview>
+      },
+      {
+        path:'/update/review/:id',
+        element:<EditReview></EditReview>,
+        loader:({params})=>{return fetch(`http://localhost:5000/update/review/${params.id}`)}
       },
       {
         path: "*",

@@ -28,7 +28,7 @@ const PasswordReset = () => {
   };
   
   return (
-    <div className=" py-48">
+    <div className="mt-20 h-screen">
       <form onSubmit={handleFogotPassword}>
         <label
           htmlFor="default-search"
