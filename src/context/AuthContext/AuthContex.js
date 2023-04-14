@@ -19,6 +19,7 @@ const auth = getAuth(app);
 
 const AuthContex = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loader,setLoader] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
   const googleSingIn = () => {
@@ -56,6 +57,7 @@ const AuthContex = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if(currentUser === null || currentUser.emailVerified ){
         setUser(currentUser);
+        setLoader(false)
       }
       
     });
@@ -74,6 +76,7 @@ const AuthContex = ({ children }) => {
     verifyEmail,
     passwordReset,
     logOut,
+    loader
   };
   return (
     <AuthContextProvider.Provider value={authInfo}>

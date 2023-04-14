@@ -25,16 +25,16 @@ const MyReview = () => {
   }, [user?.email, refresh]);
 
   return (
-    <div className=" py-44">
+    <div >
       {loader ? (
         <Spiner></Spiner>
       ) : (
         <div>
-          <h2 className={`text-4xl text-center mb-10 ${dark && "text-white"}`}>
+          <h2 className={`text-4xl text-center mt-16 mb-10 ${dark && "text-white"}`}>
             {user?.displayName}'s Reviews
           </h2>
           {myReviews.length === 0 ? (
-            <div>
+            <div className=" mb-80">
               <h2 className={`text-2xl mb-10 ${dark && "text-white"}`}>
                 Currently you don't have any review.
                 <Link className=" btn-link  " to={`/products`}>
@@ -45,7 +45,7 @@ const MyReview = () => {
           ) : (
             <div className="overflow-x-auto">
               <table
-                className={`min-w-full divide-y-2 divide-gray-200 text-sm ${
+                className={`mb-80 min-w-full divide-y-2 divide-gray-200 text-sm ${
                   dark
                     && "divide-gray-700"
                   

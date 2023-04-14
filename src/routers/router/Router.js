@@ -9,6 +9,7 @@ import Singup from "../../pages/registration/singup/Singup";
 import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
 import MyReview from "../../pages/myReview/MyReview";
 import EditReview from '../../pages/myReview/EditReview/EditReview'
+import PrivetRouter from "../privetRouter/PrivetRouter";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
         loader: ({ params }) => {
           return fetch(`http://localhost:5000/product/detail/${params.id}`);
         },
-        element: <Detail></Detail>,
+        element: <PrivetRouter><Detail></Detail></PrivetRouter>,
       },
       {
         path: "/login",
@@ -47,7 +48,7 @@ export const router = createBrowserRouter([
       },
       {
         path:'/myreviews',
-        element:<MyReview></MyReview>
+        element:<PrivetRouter><MyReview></MyReview></PrivetRouter>
       },
       {
         path:'/update/review/:id',

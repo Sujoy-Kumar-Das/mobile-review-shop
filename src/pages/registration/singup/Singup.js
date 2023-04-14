@@ -82,7 +82,7 @@ const Singup = () => {
 
   return (
     <div  className={` max-h-screen my-5 w-4/5 mx-auto lg:w-full ${dark && "text-white"}`}>
-      <h2 className=" my-5 text-4xl text-center font-semibold ">
+      <h2 className=" my-4 text-4xl text-center font-semibold ">
         Singup now !
       </h2>
       <form onSubmit={handleSubmit}>

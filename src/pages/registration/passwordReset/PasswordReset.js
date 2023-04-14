@@ -28,7 +28,7 @@ const PasswordReset = () => {
   };
   
   return (
-    <div className="mt-20 h-screen">
+    <div className=" mt-14 px-4 lg:p-0 mb-96">
       <form onSubmit={handleFogotPassword}>
         <label
           htmlFor="default-search"
@@ -42,7 +42,7 @@ const PasswordReset = () => {
             type="search"
             id="default-search"
             name="email"
-            className={`block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 ${dark && "bg-gray-700 border-gray-600 focus:ring-blue-500 placeholder-gray-400 text-white focus:border-blue-500"}`}
+            className={`block w-full p-4  text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 ${dark && "bg-gray-700 border-gray-600 focus:ring-blue-500 placeholder-gray-400 text-white focus:border-blue-500"}`}
             placeholder="Enter your email address here"
             required
           />

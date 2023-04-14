@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UseTitle from "../../../hooks/UseTitle";
 import SocialLogin from "../socialLogin/SocialLogin";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
@@ -10,6 +10,9 @@ const Login = () => {
   const { dark } = useContext(ThemContextProvider);
   const { loginWithEmailAndPass } = useContext(AuthContextProvider);
   UseTitle("login");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate()
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -21,6 +24,7 @@ const Login = () => {
         if (user.emailVerified) {
           toast.success("Logged in successfully");
           form.reset();
+          navigate(from,{replace:true})
           console.log(user);
         } else {
           toast.error("Please verify your email address");
@@ -30,8 +34,8 @@ const Login = () => {
   };
   return (
     <div
-      style={{height:"418px"}}
-      className={`  w-4/5 mx-auto lg:w-full my-10 ${dark && "text-white"}`}
+      // style={{height:"418px"}}
+      className={`  w-4/5 mx-auto lg:w-full mb-0 lg:mb-40 my-8 ${dark && "text-white"}`}
     >
       <h2 className=" text-4xl text-center font-semibold mb-10">Login now !</h2>
       <form onSubmit={handleLogin}>
