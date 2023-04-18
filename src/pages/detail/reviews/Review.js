@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import UpdateField from "../updateField/UpdateField";
+import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 
 const Review = ({ review }) => {
-  const { _id, productName, comment, userPhoto,userName } = review;
+  const {user} = useContext(AuthContextProvider);
+  const { _id, productName, comment, userPhoto, userName } = review;
   const [show, setShow] = useState(false);
   // console.log(userPhoto)
   const handleDelete = (id) => {
     const promot = window.confirm(
       `Are you sure you want to delete ${productName} review`
     );
-    
+
     if (promot) {
-      fetch(`http://localhost:5000/review/${id}`, {
+      fetch(`http://localhost:5000/review?id=${id}&&email=${user.email}`, {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
       })
         .then((res) => res.json())
         .then((data) => {
@@ -37,7 +42,7 @@ const Review = ({ review }) => {
           <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />
           <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
             <cite className="pr-3 font-medium">{userName}</cite>
-            
+
             <cite
               onClick={() => setShow(!show)}
               className="pr-3 font-medium cursor-default hover:underline"
@@ -52,9 +57,14 @@ const Review = ({ review }) => {
             >
               Delete
             </cite>
-            {review?.date?.length>25 ? <cite className="pr-3 font-medium">{review.date.slice(0,25)}</cite>:''}
+            {review?.date?.length > 25 ? (
+              <cite className="pr-3 font-medium">
+                {review.date.slice(0, 25)}
+              </cite>
+            ) : (
+              ""
+            )}
           </div>
-          
         </figcaption>
       </figure>
       <div className={`${show ? "block" : "hidden"}`}>

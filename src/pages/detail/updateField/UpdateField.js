@@ -1,33 +1,39 @@
 import React, { useContext, useState } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { toast } from "react-hot-toast";
+import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 const UpdateField = ({ review }) => {
   const { dark } = useContext(ThemContextProvider);
-
+  const { user } = useContext(AuthContextProvider);
   const { _id, comment, productName } = review;
 
   const [newComment, setNewComment] = useState({ comment });
-  
+
   const handleChange = (event) => {
-    const newMessage = { 
+    const newMessage = {
       comment: event.target.value,
-      date:Date()
-     };
+      date: Date(),
+    };
     setNewComment(newMessage);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:5000/update/review?id=${_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newComment),
-    })
+    fetch(
+      `http://localhost:5000/update/review?id=${_id}&&email=${user.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
+        body: JSON.stringify(newComment),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount) {
           toast.success(`${productName} review updated successfully`);
           event.target.reset();
-          
         } else {
           toast.error("Please add a review");
         }

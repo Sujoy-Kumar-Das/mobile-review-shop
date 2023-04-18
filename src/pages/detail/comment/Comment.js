@@ -24,10 +24,11 @@ const Comment = ({ data }) => {
         userPhoto: user.photoURL,
       
     };
-    fetch("http://localhost:5000/review", {
+    fetch(`http://localhost:5000/review?email=${user?.email}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization:`Bearer ${localStorage.getItem("Access_Token")}`
       },
       body: JSON.stringify(review),
     })

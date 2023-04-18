@@ -6,9 +6,11 @@ import Review from "./reviews/Review";
 import Comment from "./comment/Comment";
 import Ratting from "./ratting/Ratting";
 import UseTitle from "../../hooks/UseTitle";
+import { AuthContextProvider } from "../../context/AuthContext/AuthContex";
 
 const Detail = () => {
   const { dark } = useContext(ThemContextProvider);
+  const {user} = useContext(AuthContextProvider)
   const [reviews, setReviews] = useState([]);
   const [refresh, setRefresh] = useState(false);
   UseTitle("product-detail");
@@ -17,7 +19,11 @@ const Detail = () => {
 
   // get reviews by product id
   useEffect(() => {
-    fetch(`http://localhost:5000/review/${_id}`)
+    fetch(`http://localhost:5000/review?id=${_id}&&email=${user.email}`, {
+      headers:{
+        authorization:`Bearer ${localStorage.getItem("Access_Token")}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
         setReviews(data.data);
@@ -53,13 +59,13 @@ const Detail = () => {
 
           <div
             className={` ${
-              reviews.length >= 1 ? "block" : "hidden"
+              reviews?.length >= 1 ? "block" : "hidden"
             } rounded my-5 p-0 pb-10 lg:p-10 ${
               dark ? "bg-gray-800 text-white" : "bg-white"
             }`}
           >
             <h2 className={`text-4xl text-center`}>Reviews</h2>
-            {reviews.map((review) => (
+            {reviews?.map((review) => (
               <Review
                 key={review._id}
                 review={review}

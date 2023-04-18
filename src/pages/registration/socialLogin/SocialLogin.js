@@ -4,21 +4,34 @@ import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 import { toast } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const SocialLogin = ({value}) => {
-    const {googleSingIn} = useContext(AuthContextProvider)
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
-    const navigate = useNavigate()
-    const handleGoogleLogin = ()=>{
-        googleSingIn()
-        .then(result=>{
-            const user = result.user;
-            toast.success(`${value} successfull`)
-            navigate(from,{replace:true})
-            // console.log(user)
+const SocialLogin = ({ value }) => {
+  const { googleSingIn } = useContext(AuthContextProvider);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
+  const handleGoogleLogin = () => {
+    googleSingIn()
+      .then((result) => {
+        const user = result.user;
+        const userEmail = { email: user.email };
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userEmail),
         })
-        .catch(error=>console.log(error))
-    }
+        .then(res => res.json())
+        .then(data=> {
+          console.log(data)
+          localStorage.setItem("Access_Token",data.token)
+        })
+        toast.success(`${value} successfull`);
+        navigate(from,{replace:true})
+        // console.log(user)
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="flex justify-center">
       <div>

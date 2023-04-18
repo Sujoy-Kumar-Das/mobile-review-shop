@@ -39,6 +39,7 @@ const AuthContex = ({ children }) => {
   }
 
   const logOut = () => {
+    localStorage.removeItem("Access_Token")
     return signOut(auth);
   };
 

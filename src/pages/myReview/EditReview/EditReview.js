@@ -3,25 +3,30 @@ import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { toast } from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
 import UseTitle from "../../../hooks/UseTitle";
+import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 const EditReview = () => {
   const { dark } = useContext(ThemContextProvider);
-    const {data} = useLoaderData()
+  const {user} = useContext(AuthContextProvider)
+  const { data } = useLoaderData();
   const { _id, comment, productName } = data;
-  UseTitle("update-comment")
+  UseTitle("update-comment");
   const [newComment, setNewComment] = useState({ comment });
-  
+
   const handleChange = (event) => {
-    const newMessage = { 
+    const newMessage = {
       comment: event.target.value,
-      date:Date()
-     };
+      date: Date(),
+    };
     setNewComment(newMessage);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:5000/update/review?id=${_id}`, {
+    fetch(`http://localhost:5000/update/review?id=${_id}&&email=${user?.email}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+      },
       body: JSON.stringify(newComment),
     })
       .then((res) => res.json())
@@ -29,7 +34,6 @@ const EditReview = () => {
         if (data.modifiedCount) {
           toast.success(`${productName} review updated successfully`);
           event.target.reset();
-          
         } else {
           toast.error("Please add a review");
         }
