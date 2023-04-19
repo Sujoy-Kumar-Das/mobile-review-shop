@@ -14,11 +14,14 @@ const MyReview = () => {
   const [refresh, setRefresh] = useState(false);
   const [loader, setLoader] = useState(true);
   useEffect(() => {
-    fetch(`http://localhost:5000/myreviews?email=${user?.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
-      },
-    })
+    fetch(
+      `https://mobile-dokan-server-steel.vercel.app/myreviews?email=${user?.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
+      }
+    )
       .then((res) => {
         if (res.status === 403) {
           logOut();
@@ -62,7 +65,7 @@ const MyReview = () => {
                 } `}
               >
                 <thead>
-                <th
+                  <th
                     className={`${
                       dark
                         ? "text-white"
@@ -107,7 +110,11 @@ const MyReview = () => {
                   ></th>
                 </thead>
 
-                <tbody className={` mb-5 divide-y divide-gray-200 ${dark && 'divide-gray-700'}`}>
+                <tbody
+                  className={` mb-5 divide-y divide-gray-200 ${
+                    dark && "divide-gray-700"
+                  }`}
+                >
                   {myReviews?.map((review) => (
                     <ReviewRow key={review._id} review={review}></ReviewRow>
                   ))}

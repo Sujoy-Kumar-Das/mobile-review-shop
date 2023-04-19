@@ -8,7 +8,7 @@ import Login from "../../pages/registration/login/Login";
 import Singup from "../../pages/registration/singup/Singup";
 import PasswordReset from "../../pages/registration/passwordReset/PasswordReset";
 import MyReview from "../../pages/myReview/MyReview";
-import EditReview from '../../pages/myReview/EditReview/EditReview'
+import EditReview from "../../pages/myReview/EditReview/EditReview";
 import PrivetRouter from "../privetRouter/PrivetRouter";
 import Blog from "../../pages/blogs/Blog";
 export const router = createBrowserRouter([
@@ -31,9 +31,15 @@ export const router = createBrowserRouter([
       {
         path: "/product/detail/:id",
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/product/detail/${params.id}`);
+          return fetch(
+            `https://mobile-dokan-server-steel.vercel.app/product/detail/${params.id}`
+          );
         },
-        element: <PrivetRouter><Detail></Detail></PrivetRouter>,
+        element: (
+          <PrivetRouter>
+            <Detail></Detail>
+          </PrivetRouter>
+        ),
       },
       {
         path: "/login",
@@ -48,17 +54,25 @@ export const router = createBrowserRouter([
         element: <PasswordReset></PasswordReset>,
       },
       {
-        path:'/myreviews',
-        element:<PrivetRouter><MyReview></MyReview></PrivetRouter>
+        path: "/myreviews",
+        element: (
+          <PrivetRouter>
+            <MyReview></MyReview>
+          </PrivetRouter>
+        ),
       },
       {
-        path:'/update/review/:id',
-        element:<EditReview></EditReview>,
-        loader:({params})=>{return fetch(`http://localhost:5000/update/review/${params.id}`)}
+        path: "/update/review/:id",
+        element: <EditReview></EditReview>,
+        loader: ({ params }) => {
+          return fetch(
+            `https://mobile-dokan-server-steel.vercel.app/update/review/${params.id}`
+          );
+        },
       },
       {
-        path:'/blogs',
-        element:<Blog></Blog>
+        path: "/blogs",
+        element: <Blog></Blog>,
       },
       {
         path: "*",

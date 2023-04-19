@@ -14,21 +14,21 @@ const SocialLogin = ({ value }) => {
       .then((result) => {
         const user = result.user;
         const userEmail = { email: user.email };
-        fetch("http://localhost:5000/jwt", {
+        fetch("https://mobile-dokan-server-steel.vercel.app/jwt", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(userEmail),
         })
-        .then(res => res.json())
-        .then(data=> {
-          // console.log(data)
-          localStorage.setItem("Access_Token",data.token)
-          toast.success(`${value} successfull`);
-          navigate(from,{replace:true})
-        })
-       
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log(data)
+            localStorage.setItem("Access_Token", data.token);
+            toast.success(`${value} successfull`);
+            navigate(from, { replace: true });
+          });
+
         // console.log(user)
       })
       .catch((error) => {

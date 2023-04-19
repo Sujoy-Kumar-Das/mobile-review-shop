@@ -17,27 +17,28 @@ const Comment = ({ data }) => {
       price: price,
       ratting: ratting,
       comment: comment,
-      date:Date(),
-      
-        userName: user.displayName,
-        userEmail: user.email,
-        userPhoto: user.photoURL,
-      
+      date: Date(),
+
+      userName: user.displayName,
+      userEmail: user.email,
+      userPhoto: user.photoURL,
     };
-    fetch(`http://localhost:5000/review?email=${user?.email}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization:`Bearer ${localStorage.getItem("Access_Token")}`
-      },
-      body: JSON.stringify(review),
-    })
+    fetch(
+      `https://mobile-dokan-server-steel.vercel.app/review?email=${user?.email}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
+        body: JSON.stringify(review),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           toast.success(data.message);
           event.target.reset();
-          
         } else {
           toast.error(data.message);
         }
@@ -51,7 +52,7 @@ const Comment = ({ data }) => {
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
           }`}
         >
-          <div className={`bg-white rounded-t-lg ${dark && 'bg-gray-800'}`}>
+          <div className={`bg-white rounded-t-lg ${dark && "bg-gray-800"}`}>
             <label htmlFor="comment" className="sr-only">
               Your comment
             </label>

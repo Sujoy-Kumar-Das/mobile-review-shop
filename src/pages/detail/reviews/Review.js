@@ -6,7 +6,7 @@ import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { FaUser } from "react-icons/fa";
 
 const Review = ({ review }) => {
-  const {dark} = useContext(ThemContextProvider)
+  const { dark } = useContext(ThemContextProvider);
   const { user } = useContext(AuthContextProvider);
   const { _id, productName, comment, userPhoto, userName } = review;
   const [show, setShow] = useState(false);
@@ -17,12 +17,15 @@ const Review = ({ review }) => {
     );
 
     if (promot) {
-      fetch(`http://localhost:5000/review?id=${id}&&email=${user.email}`, {
-        method: "DELETE",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
-        },
-      })
+      fetch(
+        `https://mobile-dokan-server-steel.vercel.app/review?id=${id}&&email=${user.email}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           toast.success(
@@ -43,13 +46,20 @@ const Review = ({ review }) => {
           <p className="text-2xl font-semibold ">"{comment}"</p>
         </blockquote>
         <figcaption className="flex items-center mt-6 space-x-3">
-          {userPhoto ? <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />:<FaUser></FaUser>}
-          
-          
-          <div className={`flex items-center divide-x-2 divide-gray-300 ${dark && 'divide-gray-700'}`}>
+          {userPhoto ? (
+            <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />
+          ) : (
+            <FaUser></FaUser>
+          )}
+
+          <div
+            className={`flex items-center divide-x-2 divide-gray-300 ${
+              dark && "divide-gray-700"
+            }`}
+          >
             <cite className="pr-3 font-medium">{userName}</cite>
 
-            {user.email === review.userEmail && (
+            {user?.email === review.userEmail && (
               <cite
                 onClick={() => setShow(!show)}
                 className="pr-3 font-medium cursor-default hover:underline"
@@ -58,17 +68,17 @@ const Review = ({ review }) => {
               </cite>
             )}
 
-            {
-              user.email === review.userEmail && <cite
-              onClick={() => {
-                handleDelete(_id);
-              }}
-              className="pr-3 font-medium cursor-default hover:underline	"
-            >
-              Delete
-            </cite>
-            }
-            
+            {user?.email === review.userEmail && (
+              <cite
+                onClick={() => {
+                  handleDelete(_id);
+                }}
+                className="pr-3 font-medium cursor-default hover:underline	"
+              >
+                Delete
+              </cite>
+            )}
+
             {review?.date?.length > 25 ? (
               <cite className="pr-3 font-medium">
                 {review.date.slice(0, 25)}

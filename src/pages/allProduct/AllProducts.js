@@ -13,7 +13,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(true);
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch("https://mobile-dokan-server-steel.vercel.app/products")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data.data)
@@ -30,7 +30,7 @@ const Products = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     const name = event.target.searchName.value;
-    fetch(`http://localhost:5000/products/${name}`)
+    fetch(`https://mobile-dokan-server-steel.vercel.app/products/${name}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

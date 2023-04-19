@@ -6,7 +6,7 @@ import UseTitle from "../../../hooks/UseTitle";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 const EditReview = () => {
   const { dark } = useContext(ThemContextProvider);
-  const {user} = useContext(AuthContextProvider)
+  const { user } = useContext(AuthContextProvider);
   const { data } = useLoaderData();
   const { _id, comment, productName } = data;
   UseTitle("update-comment");
@@ -22,20 +22,23 @@ const EditReview = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:5000/update/review?id=${_id}&&email=${user?.email}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
-      },
-      body: JSON.stringify(newComment),
-    })
+    fetch(
+      `https://mobile-dokan-server-steel.vercel.app/update/review?id=${_id}&&email=${user?.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
+        body: JSON.stringify(newComment),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount) {
           toast.success(`${productName} review updated successfully`);
           event.target.reset();
-          navigate('/myreviews')
+          navigate("/myreviews");
         } else {
           toast.error("Please add a review");
         }

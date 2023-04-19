@@ -59,30 +59,26 @@ const Singup = () => {
         updateUser(userInfo)
           .then((result) => {})
           .catch((error) => {});
-          if (user) {
-            const userEmail = { email: user.email };
-            
-            fetch(
-              fetch("http://localhost:5000/jwt", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userEmail),
-              })
-              .then(res => res.json())
-              .then(data => {
+        if (user) {
+          const userEmail = { email: user.email };
+
+          fetch(
+            fetch("https://mobile-dokan-server-steel.vercel.app/jwt", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userEmail),
+            })
+              .then((res) => res.json())
+              .then((data) => {
                 toast.success("Logged in successfully");
-                localStorage.setItem("Access_Token",data.token)
+                localStorage.setItem("Access_Token", data.token);
                 form.reset();
-                navigate(from,{replace:true})
+                navigate(from, { replace: true });
               })
-            );
-            
-            
-          } 
-          
-          
+          );
+        }
       })
       .catch((error) => {
         const message = error.message;
@@ -97,7 +93,11 @@ const Singup = () => {
   };
 
   return (
-    <div  className={` max-h-screen my-5 w-4/5 mx-auto lg:w-full ${dark && "text-white"}`}>
+    <div
+      className={` max-h-screen my-5 w-4/5 mx-auto lg:w-full ${
+        dark && "text-white"
+      }`}
+    >
       <h2 className=" my-4 text-4xl text-center font-semibold ">
         Singup now !
       </h2>

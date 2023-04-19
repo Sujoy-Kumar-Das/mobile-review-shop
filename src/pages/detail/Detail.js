@@ -10,7 +10,7 @@ import { AuthContextProvider } from "../../context/AuthContext/AuthContex";
 
 const Detail = () => {
   const { dark } = useContext(ThemContextProvider);
-  const {user} = useContext(AuthContextProvider)
+  const { user } = useContext(AuthContextProvider);
   const [reviews, setReviews] = useState([]);
   const [refresh, setRefresh] = useState(false);
   UseTitle("product-detail");
@@ -19,17 +19,20 @@ const Detail = () => {
 
   // get reviews by product id
   useEffect(() => {
-    fetch(`http://localhost:5000/review?id=${_id}&&email=${user.email}`, {
-      headers:{
-        authorization:`Bearer ${localStorage.getItem("Access_Token")}`
+    fetch(
+      `https://mobile-dokan-server-steel.vercel.app/review?id=${_id}&&email=${user?.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+        },
       }
-    })
+    )
       .then((res) => res.json())
       .then((data) => {
         setReviews(data.data);
         setRefresh(!refresh);
       });
-  }, [_id, refresh,user.email]);
+  }, [_id, refresh, user?.email]);
 
   return (
     <div>

@@ -23,26 +23,24 @@ const Login = () => {
         const user = result.user;
         if (user) {
           const userEmail = { email: user.email };
-          
+
           fetch(
-            fetch("http://localhost:5000/jwt", {
+            fetch("https://mobile-dokan-server-steel.vercel.app/jwt", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(userEmail),
             })
-            .then(res => res.json())
-            .then(data => {
-              toast.success("Logged in successfully");
-              localStorage.setItem("Access_Token",data.token)
-              form.reset();
-              navigate(from,{replace:true})
-            })
+              .then((res) => res.json())
+              .then((data) => {
+                toast.success("Logged in successfully");
+                localStorage.setItem("Access_Token", data.token);
+                form.reset();
+                navigate(from, { replace: true });
+              })
           );
-          
-          
-        } 
+        }
         // else {
         //   toast.error("Please verify your email address");
         // }

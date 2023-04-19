@@ -6,17 +6,20 @@ import { AuthContextProvider } from "../../context/AuthContext/AuthContex";
 
 const ReviewRow = ({ review }) => {
   const { dark } = useContext(ThemContextProvider);
-  const {user} = useContext(AuthContextProvider)
+  const { user } = useContext(AuthContextProvider);
   const handleDelete = (id) => {
     const promot = window.confirm(`Are you sure you want to delete review`);
 
     if (promot) {
-      fetch(`http://localhost:5000/review?id=${id}&&email=${user.email}`, {
-        method: "DELETE",
-        headers:{
-          authorization:`Bearer ${localStorage.getItem("Access_Token")}`
+      fetch(
+        `https://mobile-dokan-server-steel.vercel.app/review?id=${id}&&email=${user.email}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("Access_Token")}`,
+          },
         }
-      })
+      )
         .then((res) => res.json())
         .then((data) => {
           toast.success(`Succesfully deleted `);
@@ -28,16 +31,9 @@ const ReviewRow = ({ review }) => {
 
   return (
     <tr>
-      <td
-
-      >
-        
+      <td>
         <div className="mask mask-square w-16 h-16 mt-3">
-          <img
-          className=" rounded"
-            src={review.img}
-            alt={review.name}
-          />
+          <img className=" rounded" src={review.img} alt={review.name} />
         </div>
       </td>
       <td

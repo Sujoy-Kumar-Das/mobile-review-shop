@@ -19,7 +19,7 @@ const UpdateField = ({ review }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(
-      `http://localhost:5000/update/review?id=${_id}&&email=${user.email}`,
+      `https://mobile-dokan-server-steel.vercel.app/update/review?id=${_id}&&email=${user.email}`,
       {
         method: "PUT",
         headers: {

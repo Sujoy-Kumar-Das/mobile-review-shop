@@ -1,12 +1,11 @@
 import React from "react";
-import banner from '../../../../assets/banner.jpg'
 import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div
       className="hero"
       style={{
-        backgroundImage: `url(${banner})`,
+        backgroundImage: "url(https://i.ibb.co/CMyXTXh/banner.jpg)",
         backgroundPosition:'center',
         backgroundSize:'cover',
         height:'600px'

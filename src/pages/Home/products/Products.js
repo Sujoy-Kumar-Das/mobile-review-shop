@@ -5,14 +5,13 @@ import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { Link } from "react-router-dom";
 import Spiner from "../../shared/loader/Spiner";
 
-
 const Products = () => {
   const { dark } = useContext(ThemContextProvider);
   const [loader, setLoader] = useState(true);
   UseTitle("products");
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/home/products")
+    fetch("https://mobile-dokan-server-steel.vercel.app/home/products")
       .then((res) => res.json())
       .then((data) => {
         // console.log(data.data)
@@ -35,11 +34,9 @@ const Products = () => {
             <h2 className="text-3xl font-bold sm:text-4xl">Our products</h2>
           </div>
           <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-         
             {products.map((product) => (
               <ProductCard key={product._id} product={product}></ProductCard>
             ))}
-            
           </div>
           <div className="flex justify-center my-5">
             <Link to={"/products"} className="btn btn-primary">
