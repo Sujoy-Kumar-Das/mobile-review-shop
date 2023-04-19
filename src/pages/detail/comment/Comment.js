@@ -51,7 +51,7 @@ const Comment = ({ data }) => {
             dark ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"
           }`}
         >
-          <div className=" bg-white rounded-t-lg dark:bg-gray-800">
+          <div className={`bg-white rounded-t-lg ${dark && 'bg-gray-800'}`}>
             <label htmlFor="comment" className="sr-only">
               Your comment
             </label>

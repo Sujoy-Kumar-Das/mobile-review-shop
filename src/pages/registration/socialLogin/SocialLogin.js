@@ -23,14 +23,24 @@ const SocialLogin = ({ value }) => {
         })
         .then(res => res.json())
         .then(data=> {
-          console.log(data)
+          // console.log(data)
           localStorage.setItem("Access_Token",data.token)
+          toast.success(`${value} successfull`);
+          navigate(from,{replace:true})
         })
-        toast.success(`${value} successfull`);
-        navigate(from,{replace:true})
+       
         // console.log(user)
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const message = error.message;
+        console.log(message);
+        toast.error(
+          message.replace(
+            "Firebase: Error (auth/email-already-in-use).",
+            "This email already had an accound please login"
+          )
+        );
+      });
   };
   return (
     <div className="flex justify-center">

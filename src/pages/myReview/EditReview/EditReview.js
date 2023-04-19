@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ThemContextProvider } from "../../../context/themContext/ThemContext";
 import { toast } from "react-hot-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import UseTitle from "../../../hooks/UseTitle";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
 const EditReview = () => {
@@ -10,6 +10,7 @@ const EditReview = () => {
   const { data } = useLoaderData();
   const { _id, comment, productName } = data;
   UseTitle("update-comment");
+  const navigate = useNavigate();
   const [newComment, setNewComment] = useState({ comment });
 
   const handleChange = (event) => {
@@ -34,6 +35,7 @@ const EditReview = () => {
         if (data.modifiedCount) {
           toast.success(`${productName} review updated successfully`);
           event.target.reset();
+          navigate('/myreviews')
         } else {
           toast.error("Please add a review");
         }

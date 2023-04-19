@@ -2,9 +2,12 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import UpdateField from "../updateField/UpdateField";
 import { AuthContextProvider } from "../../../context/AuthContext/AuthContex";
+import { ThemContextProvider } from "../../../context/themContext/ThemContext";
+import { FaUser } from "react-icons/fa";
 
 const Review = ({ review }) => {
-  const {user} = useContext(AuthContextProvider);
+  const {dark} = useContext(ThemContextProvider)
+  const { user } = useContext(AuthContextProvider);
   const { _id, productName, comment, userPhoto, userName } = review;
   const [show, setShow] = useState(false);
   // console.log(userPhoto)
@@ -30,6 +33,7 @@ const Review = ({ review }) => {
       toast.error("You canceld the deleteation");
     }
   };
+  // console.log(review)
   return (
     <div className="mx-auto w-4/5 lg:w-full my-5 border border-gray-200 rounded-lg p-5">
       <figure>
@@ -39,17 +43,23 @@ const Review = ({ review }) => {
           <p className="text-2xl font-semibold ">"{comment}"</p>
         </blockquote>
         <figcaption className="flex items-center mt-6 space-x-3">
-          <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />
-          <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
+          {userPhoto ? <img alt="" className="w-6 h-6 rounded-full" src={userPhoto} />:<FaUser></FaUser>}
+          
+          
+          <div className={`flex items-center divide-x-2 divide-gray-300 ${dark && 'divide-gray-700'}`}>
             <cite className="pr-3 font-medium">{userName}</cite>
 
-            <cite
-              onClick={() => setShow(!show)}
-              className="pr-3 font-medium cursor-default hover:underline"
-            >
-              Edit
-            </cite>
-            <cite
+            {user.email === review.userEmail && (
+              <cite
+                onClick={() => setShow(!show)}
+                className="pr-3 font-medium cursor-default hover:underline"
+              >
+                Edit
+              </cite>
+            )}
+
+            {
+              user.email === review.userEmail && <cite
               onClick={() => {
                 handleDelete(_id);
               }}
@@ -57,6 +67,8 @@ const Review = ({ review }) => {
             >
               Delete
             </cite>
+            }
+            
             {review?.date?.length > 25 ? (
               <cite className="pr-3 font-medium">
                 {review.date.slice(0, 25)}

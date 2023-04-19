@@ -29,7 +29,7 @@ const Detail = () => {
         setReviews(data.data);
         setRefresh(!refresh);
       });
-  }, [_id, refresh]);
+  }, [_id, refresh,user.email]);
 
   return (
     <div>

@@ -35,7 +35,7 @@ const Products = () => {
       .then((data) => {
         if (data.success) {
           setProducts(data.data);
-          console.log(data.data);
+          // console.log(data.data);
         } else {
           navigate("*");
         }

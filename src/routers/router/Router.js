@@ -10,6 +10,7 @@ import PasswordReset from "../../pages/registration/passwordReset/PasswordReset"
 import MyReview from "../../pages/myReview/MyReview";
 import EditReview from '../../pages/myReview/EditReview/EditReview'
 import PrivetRouter from "../privetRouter/PrivetRouter";
+import Blog from "../../pages/blogs/Blog";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
         path:'/update/review/:id',
         element:<EditReview></EditReview>,
         loader:({params})=>{return fetch(`http://localhost:5000/update/review/${params.id}`)}
+      },
+      {
+        path:'/blogs',
+        element:<Blog></Blog>
       },
       {
         path: "*",

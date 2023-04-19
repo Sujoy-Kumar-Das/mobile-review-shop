@@ -12,7 +12,7 @@ const Login = () => {
   UseTitle("login");
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -21,21 +21,40 @@ const Login = () => {
     loginWithEmailAndPass(email, password)
       .then((result) => {
         const user = result.user;
-        if (user.emailVerified) {
-          toast.success("Logged in successfully");
-          form.reset();
-          navigate(from,{replace:true})
-          console.log(user);
-        } else {
-          toast.error("Please verify your email address");
-        }
+        if (user) {
+          const userEmail = { email: user.email };
+          
+          fetch(
+            fetch("http://localhost:5000/jwt", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userEmail),
+            })
+            .then(res => res.json())
+            .then(data => {
+              toast.success("Logged in successfully");
+              localStorage.setItem("Access_Token",data.token)
+              form.reset();
+              navigate(from,{replace:true})
+            })
+          );
+          
+          
+        } 
+        // else {
+        //   toast.error("Please verify your email address");
+        // }
       })
       .catch((error) => console.log(error));
   };
   return (
     <div
       // style={{height:"418px"}}
-      className={`  w-4/5 mx-auto lg:w-full mb-0 lg:mb-40 my-8 ${dark && "text-white"}`}
+      className={`  w-4/5 mx-auto lg:w-full mb-0 lg:mb-40 my-8 ${
+        dark && "text-white"
+      }`}
     >
       <h2 className=" text-4xl text-center font-semibold mb-10">Login now !</h2>
       <form onSubmit={handleLogin}>
