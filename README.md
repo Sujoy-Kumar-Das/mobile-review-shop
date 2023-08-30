@@ -1,5 +1,6 @@
 ## mobile bazar app features
 ### In this app i used ....
+* server repo : https://github.com/Sujoy-Kumar-Das/mobile-review-shop-server
 * live link :- https://mobile-review-app-76a3e.web.app
 * react,tailwind,daisy ui for client side.
 * firebase for authentication.
